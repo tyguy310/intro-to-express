@@ -42,10 +42,7 @@ app.post('/vegetables', (req, res, next) => {
   const body = [];
 
   req.on('data', function (chunk) {
-    // const newVeggie = JSON.parse(chunk).name;
-
     body.push(chunk.toString());
-    // console.log(body);
   }).on('end', function () {
     const data = JSON.parse(body.join(''));
     if (veggieArray.indexOf(data.name) > -1) {

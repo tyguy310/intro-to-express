@@ -2,27 +2,25 @@ var groceries = require('./groceries')
 
 var express = require('express');
 var app = express();
-const veggieArray = groceries.vegetables;
-// console.log(veggieArray);
+var veggieArray = groceries.vegetables;
 
 app.listen(3000, () => {console.log('Starting a server on http://localhost:3000')});
 
 app.get('/vegetables/:id', (req, res, next) => {
   veggieArray = groceries.vegetables;
   const index = req.params.id;
-  // if (veggieArray.length < index) {
-  //   res.status(404).send('No vegetable found.')
-  // }
   const veggie = groceries.vegetables[req.params.id] || 'No veggie found'
   res.send(veggie)
-  // else {
     res.status(418).send(veggieArray[index])
-  // }
 });
 
 app.get('/vegetables', (req, res, next) => {
   const search = req.query.search;
   const foundVeggie = groceries.vegetables.filter(filterer);
+
+  if (search === undefined) {
+    res.send(veggieArray)
+  }
 
   function filterer (element) {
     if (element.toLowerCase().indexOf(search.toLowerCase()) > -1){
